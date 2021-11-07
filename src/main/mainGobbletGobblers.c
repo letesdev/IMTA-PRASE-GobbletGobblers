@@ -2,9 +2,11 @@
 
 
 /**
- * @file main_example.c
- * @brief a simple illustration of how to include and use board.h and board.o.
+ * @file mainGobbletGobblers.c
+ * @brief Gobblet Gobblers game launcher. 
+ * 
  */
+
 
 int menuPrincipal(){
     int valor;
@@ -20,8 +22,8 @@ int menuPrincipal(){
 }
 
 int main(int args, char **argv){
-	int playerG = 0;
-    board game = new_game();
+	int playerG = 0;                /* Joueur vainqueur  */
+    board game = new_game();        /* Initialisation du tableau (voir board.h) */
     while (1){
         system("clear");            /* Clear Screen */
         switch (menuPrincipal()){
@@ -33,15 +35,13 @@ int main(int args, char **argv){
                 return 0;
             case 2:                 /* Mode de jeu: machine vs current_player */
                 //printf("2");
-                
                 continue;
-    /*        case '3':
-                otrafuncion();
+            /*case '3':
+                autrefonction();
                 continue; */
-            /* Salida */
             case 0:
+            /* Sortie */
             default:
-                /* Dejamos la consola como nos la encontramos */
                 printf("Au revoir!\n");
                 return 0;
         }

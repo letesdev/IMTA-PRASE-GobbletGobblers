@@ -2,8 +2,8 @@
 #define LOGICGAME_H_INCLUDED
 
 #include <stdio.h>
-#include <stdlib.h> /* para system()*/
-#include <unistd.h> /* para sleep()*/
+#include <stdlib.h> /* pour system()*/
+#include <unistd.h> /* pour sleep()*/
 #include "../board.h"
 #include "../auxiliar/auxiliar.h"
 #include "../interface/interfaceConsole.h"
@@ -50,6 +50,8 @@ void check_turn(int choixTour, int type, int line, int column, int line_final, i
  *      2. Move one of your pieces already on the board to an empty space or over a smaller piece.
  * 
  *  Wins the first player to get three pieces in a row. 
+ * 
+ *  Calls the fonction choix() to ask each player what they want to do. 
  *
  *  @param board, initialized when starting the game
  * 

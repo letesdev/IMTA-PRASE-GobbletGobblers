@@ -7,13 +7,13 @@ void choix(board game, player current_player){
     while (valide != 0){
         valide = 1;
         choixTour = check_input(1, 2, "\nVoulez-vous ajouter ou déplacer une pièce? (1/2) >");
-        if (choixTour == 1){ // Ajouter une pièce
+        if (choixTour == 1){ /* Ajouter une pièce */
             line = check_input(1, 3, "Introduisez la ligne (1,2,3) :");
             column = check_input(1, 3, "Introduisez la colonne (1,2,3) :");
             type = check_input(1, 3, "Introduisez la taille (1,2,3) :");
 
             //check_turn(choixTour, type, line, column, line_final, column_final, &valide, current_player, game);
-            // Il me semble qu'il y a pas besoin de checker le tour. 
+            // Il me semble qu'il y a pas besoin de vérifier le tour. 
             valide = place_piece(game, current_player, type, line - 1, column - 1);
             switch (valide){
                 case 0:
@@ -31,8 +31,7 @@ void choix(board game, player current_player){
                 default:
                     break;
             }
-        }
-        else if (choixTour == 2){ // Déplacer une pièce
+        } else if (choixTour == 2){ /* Déplacer une pièce */
             line = check_input(1, 3, "Introduisez la ligne: ");
             column = check_input(1, 3, "Introduisez la colonne: ");
             line_final = check_input(1, 3, "Introduisez la ligne finale: ");
@@ -58,7 +57,6 @@ void choix(board game, player current_player){
                     break;
             }
         }
-        
     }
 }
 
@@ -67,7 +65,7 @@ void choix(board game, player current_player){
 void check_turn(int choixTour, int type, int line, int column, int line_final, int column_final, int *valide, int current_player, board game)
 {
     if (choixTour == 0){ // Ajouter une pièce
-        /* Checks à faire: 
+        /* Vérifications à faire: 
             - Est-ce que le current_player a toujours des pièces de cette taille?
             - Est-ce qu'il y a déjà une pièce de taille supérieure à celle du current_player?
         */
@@ -83,7 +81,7 @@ void check_turn(int choixTour, int type, int line, int column, int line_final, i
             *valide = 1;
         }
     }else if (choixTour == 1){
-        /* Checks à faire: 
+        /* Vérifications à faire: 
             - Est-ce que la pièce appartient au current_player? 
             - Est-ce qu'il y a déjà une pièce de taille supérieure à celle du current_player?
             - Est-ce qu'il y a une pièce de taille supérieure sur cette pièce?
