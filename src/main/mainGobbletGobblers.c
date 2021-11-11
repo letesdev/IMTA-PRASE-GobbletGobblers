@@ -11,10 +11,22 @@
 int menuPrincipal(){
     int valor;
 
-    printf("Bienvenu au jeu de Gobblet Gobblers.\n \
-    Choisisez une option pour continuer, puis appuyez ENTER:\n \
+    printf("   ______      __    __    __     __       ______      __    __    __              \n");
+    printf("  / ____/___  / /_  / /_  / /__  / /_     / ____/___  / /_  / /_  / /__  __________\n");
+    printf(" / / __/ __ \\/ __ \\/ __ \\/ / _ \\/ __/    / / __/ __ \\/ __ \\/ __ \\/ / _ \\/ ___/ ___/\n");
+    printf("/ /_/ / /_/ / /_/ / /_/ / /  __/ /_     / /_/ / /_/ / /_/ / /_/ / /  __/ /  (__  ) \n");
+    printf("\\____/\\____/_.___/_.___/_/\\___/\\__/     \\____/\\____/_.___/_.___/_/\\___/_/  /____/  \n");
+
+    printf("-----------------------------------------------------------------------------------------\n");
+    printf("  _____         __             ____          __         \n");
+    printf(" / ___/__ _____/ /__  ___     / __/__ ____  / /____  ___\n");
+    printf("/ /__/ _ `/ __/ / _ \\(_-<    _\\ \\/ _ `/ _ \\/ __/ _ \\(_-<\n");
+    printf("\\___/\\_,_/_/ /_/\\___/___/   /___/\\_,_/_//_/\\__/\\___/___/\n");
+    printf("\n");
+
+    printf("Choisisez une option pour continuer, puis appuyez ENTER:\n \
     \t 1. Deux joueurs. \n \
-    N'importe quel numéro pour sortir...\n \
+    \t *N'importe quel numéro pour sortir...*\n \
     Option choisie: ");
     scanf("%d", &valor);
     

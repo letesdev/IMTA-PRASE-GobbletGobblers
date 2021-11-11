@@ -101,21 +101,20 @@ void check_turn(int choixTour, int type, int line, int column, int line_final, i
 }
 
 
-/* Mode de jeu: deux joueurs */
+/* Mode de jeu: deux joueurs (pas de machine)*/
+/*  current_player 1 == Vous
+    current_player 2 == Ami */
 int play1vs1(board game){
     int run = 1;
-    /*  current_player 1 == Vous
-        current_player 2 == Ami */
     player current_player = PLAYER_1; /* On commence tout le temps par le current_player 1*/
 
     while (run == 1){
         system("clear");
         printf("Mode de jeu: 1 contre 1\n");
+        printf("Tour du ");
         if (current_player == 1){
-            printf("Tour du ");
             printf(ANSI_COLOR_YELLOW "joueur #1!\n" ANSI_COLOR_RESET);
         }else if (current_player == 2){
-            printf("Tour du ");
             printf(ANSI_COLOR_BLUE "joueur #2!\n" ANSI_COLOR_RESET);
         }
         
@@ -123,11 +122,13 @@ int play1vs1(board game){
         printGameBoard(game);
         choix(game, current_player);
         
-        if (current_player == 1){
+        /*if (current_player == 1){
             current_player = next_player(current_player);
         }else if (current_player == 2){
             current_player = next_player(current_player);
-        }
+        }*/
+
+        current_player = next_player(current_player);
 
         if (get_winner(game)!=0){
             run = 0;
