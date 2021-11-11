@@ -1,0 +1,4 @@
+<map id="board_s" name="board_s">
+<area shape="rect" id="node2" href="$structhouse.html" title="House content of a player. " alt="" coords="5,5,63,32"/>
+<area shape="rect" id="node3" href="$structplace__s.html" title="a square of the board. " alt="" coords="87,5,154,32"/>
+</map>
