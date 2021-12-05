@@ -17,7 +17,7 @@ Board::Board(){
 Board::Board(Board const &original_game){
     current_player = original_game.current_player;
     for (int i = 0; i < 3; i++){
-        for (int j = 0; j < dimensions*dimensions; i++){
+        for (int j = 0; j < dimensions*dimensions; j++){            
             size_matrix[i][j] = original_game.size_matrix[i][j];
             player_matrix[i][j] = original_game.player_matrix[i][j];
         }

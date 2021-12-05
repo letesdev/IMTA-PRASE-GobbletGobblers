@@ -48,7 +48,7 @@ int main(){
             case 2:                 /* Mode de jeu: machine vs current_player */
                 srand(time(NULL));
                 playerG = l0.play1vsbot();
-                if (playerG == PLAYER_1){
+                if (playerG == PLAYER_2){
                     cout <<"Victoire du bot !!!" << endl;
                 }else{
                     cout <<"Victoire du joueur " << playerG << "!!!" << endl;

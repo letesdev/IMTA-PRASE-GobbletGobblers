@@ -92,6 +92,8 @@ void Logic::simulate_move(Board &board, player current_player, bot current_bot){
     vector<int> legal_move_target_size;
 
     
+    Board copye_tableau(board);
+
     switch ((bot) current_bot - 1){
         case RANDOM:{
             while (valide != 0){
@@ -115,14 +117,57 @@ void Logic::simulate_move(Board &board, player current_player, bot current_bot){
                             valide = board.move_piece(legal_move_source_lines[random_choice], legal_move_source_column[random_choice], legal_move_target_lines[random_choice], legal_move_target_column[random_choice]);
                         }
                     }
-                }    
+                }
+            }
+            break;}
+        
+        case ONELAYER:{
+            while (valide != 0){
+                
+                //int random_move = rand() % 2 + 1;
+                
+                copye_tableau.get_legal_place(legal_lines, legal_columns, legal_sizes);
+                for(std::size_t i = 0; i < legal_lines.size(); ++i) {
+                    copye_tableau.place_piece((size) legal_sizes[i], legal_lines[i], legal_columns[i]);
+                    if (copye_tableau.get_winner()==2){
+                        valide = board.place_piece((size) legal_sizes[i], legal_lines[i], legal_columns[i]);
+                        break;
+                    }
+                }
+                copye_tableau.get_legal_moves(legal_move_source_lines, legal_move_source_column, legal_move_source_size, legal_move_target_lines, legal_move_target_column, legal_move_target_size);
+                if (!legal_move_source_lines.empty()){
+                    for(std::size_t i = 0; i < legal_move_source_lines.size(); ++i) {
+                        copye_tableau.move_piece(legal_move_source_lines[i], legal_move_source_column[i], legal_move_target_lines[i], legal_move_target_column[i]);
+                        if (copye_tableau.get_winner()== 2){
+                            valide = board.move_piece(legal_move_source_lines[i], legal_move_source_column[i], legal_move_target_lines[i], legal_move_target_column[i]);
+                            break;
+                        }
+                    }
+                }
+                if (valide !=0){
+                    int random_move = rand() % 2 + 1;
+                    if (random_move == 1){ // place piece
+                        //board.get_legal_place(legal_lines, legal_columns, legal_sizes);
+                        while (valide != 0){
+                            int random_choice = rand() % legal_lines.size() + 1;
+                            valide = board.place_piece((size) legal_sizes[random_choice], legal_lines[random_choice], legal_columns[random_choice]);
+                        }
+                    }else{ // move piece
+                        //board.get_legal_moves(legal_move_source_lines, legal_move_source_column, legal_move_source_size, legal_move_target_lines, legal_move_target_column, legal_move_target_size);
+                        if (!legal_move_source_lines.empty()){
+                            /*for(std::size_t i = 0; i < legal_move_source_lines.size(); ++i) {
+                                cout << "source (" << legal_move_source_lines[i] << ", " << legal_move_source_column[i] << ") -> (" << legal_move_target_lines[i] << ", " << legal_move_target_column[i] << ")" << endl;
+                            }*/
+                            while (valide != 0){
+                                int random_choice = rand() % legal_move_source_lines.size() + 1;
+                                valide = board.move_piece(legal_move_source_lines[random_choice], legal_move_source_column[random_choice], legal_move_target_lines[random_choice], legal_move_target_column[random_choice]);
+                            }
+                        }
+                    }
+                }
             }
             break;}
         /*
-        case ONELAYER:
-        
-            break;
-
         case TWOLAYER:
         
             break;
@@ -134,7 +179,6 @@ void Logic::simulate_move(Board &board, player current_player, bot current_bot){
         default:
             break;
     }
-
 }
 
 /* Mode de jeu: deux joueurs (pas de machine)*/
@@ -176,8 +220,9 @@ bot Logic::askBotType(){
 
     valor = check_input(1, 1, "Choisisez un type de bot, puis appuyez ENTER:\n \
          1. Random. \n \
+         2. One Layer. \n \
         Option choisie: ");
-    /*2. One Layer. \n \
+        /*
          3. Two Layer. \n \
          4. Invincible. \n \*/
     return (bot) valor;
@@ -193,8 +238,8 @@ int Logic::play1vsbot(){
     int run = 1;
     
     player current_player = tableau.next_player();
-    //current_bot = askBotType();
-    current_bot = RANDOM;
+    current_bot = askBotType();
+    //current_bot = ONELAYER;
     while (run == 1){
         system("clear");
         cout << "Mode de jeu: Joueur contre Bot" << endl;
