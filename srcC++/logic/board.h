@@ -1,6 +1,8 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include <vector>
+
 enum sizes_e {NONE, SMALL, MEDIUM, LARGE};
 typedef enum sizes_e size;
 
@@ -38,6 +40,9 @@ class Board{
         void take_piece_from_house(player checked_player, size piece_size);
         int place_piece(size piece_size, int line, int column);
         int move_piece(int source_line, int source_column, int target_line, int target_column);
+        //void get_legal_moves(int legal_lines[], int legal_columns[]);
+        void get_legal_place(std::vector<int> &lines, std::vector<int> &columns, std::vector<int> &sizes);
+        void get_legal_moves(std::vector<int> &source_lines, std::vector<int> &source_columns, std::vector<int> &source_sizes, std::vector<int> &target_lines, std::vector<int> &target_columns, std::vector<int> &target_sizes);
 
         //getters
         int getDimensions();

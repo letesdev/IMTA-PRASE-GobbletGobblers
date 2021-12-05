@@ -200,6 +200,95 @@ int Board::move_piece(int source_line, int source_column, int target_line, int t
     return 0;
 }
 
+/*void Board::get_legal_moves(int legal_lines[], int legal_columns[]){
+    int lines[];
+    for (int line = 0; line < dimensions; line++){
+        for (int column = 0; column < dimensions; column++){
+            if (get_piece_size(line, column) == NONE){
+                i++;
+            }
+        }
+    }
+}*/
+
+void Board::get_legal_place(vector<int> &lines, vector<int> &columns, std::vector<int> &sizes){
+    for (int line = 0; line < dimensions; line++){
+        for (int column = 0; column < dimensions; column++){
+            if (get_piece_size(line, column) == MEDIUM && get_nb_piece_in_house(current_player, LARGE) > 0){
+                lines.push_back(line);
+                columns.push_back(column);
+                sizes.push_back(3);
+            }
+            if (get_piece_size(line, column) == SMALL && get_nb_piece_in_house(current_player, MEDIUM) > 0){
+                lines.push_back(line);
+                columns.push_back(column);
+                sizes.push_back(2);
+            }
+            if (get_piece_size(line, column) == SMALL && get_nb_piece_in_house(current_player, LARGE) > 0){
+                lines.push_back(line);
+                columns.push_back(column);
+                sizes.push_back(3);
+            }
+            if (get_piece_size(line, column) == NONE && get_nb_piece_in_house(current_player, LARGE) > 0){
+                lines.push_back(line);
+                columns.push_back(column);
+                sizes.push_back(3);
+            }
+            if (get_piece_size(line, column) == NONE && get_nb_piece_in_house(current_player, MEDIUM) > 0){
+                lines.push_back(line);
+                columns.push_back(column);
+                sizes.push_back(2);
+            }
+            if (get_piece_size(line, column) == NONE && get_nb_piece_in_house(current_player, SMALL) > 0){
+                lines.push_back(line);
+                columns.push_back(column);
+                sizes.push_back(1);
+            }
+        }
+    }
+}
+
+void Board::get_legal_moves(std::vector<int> &source_lines, std::vector<int> &source_columns, std::vector<int> &source_sizes, std::vector<int> &target_lines, std::vector<int> &target_columns, std::vector<int> &target_sizes){
+    vector<int> legal_move_source_lines; 
+    vector<int> legal_move_source_column;
+    vector<int> legal_move_source_size;
+    for (int line = 0; line < dimensions; line++){
+        for (int column = 0; column < dimensions; column++){
+            if (get_place_holder(line, column) == current_player){
+                legal_move_source_lines.push_back(line);
+                legal_move_source_column.push_back(column);
+                legal_move_source_size.push_back(get_piece_size(line, column));
+            }
+        }
+    }
+    /*cout << "ya" << endl;
+    if (!legal_move_source_lines.empty()){
+        for(std::size_t i = 0; i < legal_move_source_lines.size(); ++i) {
+            std::cout << legal_move_source_lines[i] << " " << legal_move_source_column[i] << endl;
+        }
+    }*/
+    
+    if (!legal_move_source_size.empty()){
+        for (int line = 0; line < dimensions; line++){
+            for (int column = 0; column < dimensions; column++){
+                if (get_place_holder(line, column) != current_player){
+                    for (std::size_t i = 0; i < legal_move_source_size.size(); ++i){
+                        if (legal_move_source_size[i] > get_piece_size(line, column)){
+                            source_lines.push_back(legal_move_source_lines[i]);
+                            source_columns.push_back(legal_move_source_column[i]);
+                            target_lines.push_back(line);
+                            target_columns.push_back(line);
+                            //cout << "source (" << legal_move_source_lines[i] << ", " << legal_move_source_column[i] << ") -> (" << line << ", " << column << ")" << endl;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+
 int Board::getDimensions(){
     return dimensions;
 }

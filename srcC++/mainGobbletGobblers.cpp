@@ -1,5 +1,7 @@
 #include <iostream>
 #include <iomanip>
+#include <time.h>
+#include <stdlib.h>
 #include "logic/board.h"
 #include "logic/logic.h"
 #include "interface/interfaceConsole.h"
@@ -23,6 +25,7 @@ int menuPrincipal(){
 
     cout <<"Choisisez une option pour continuer, puis appuyez ENTER:\n \
     \t 1. Deux joueurs. \n \
+    \t 2. Joueur vs Bot. \n \
     \t *N'importe quel numéro pour sortir...*\n \
     Option choisie: ";
     cin >> valor;
@@ -43,8 +46,15 @@ int main(){
                 cout <<"Au revoir!" << endl;
                 return 0;
             case 2:                 /* Mode de jeu: machine vs current_player */
-                //printf("2");
-                continue;
+                srand(time(NULL));
+                playerG = l0.play1vsbot();
+                if (playerG == PLAYER_1){
+                    cout <<"Victoire du bot !!!" << endl;
+                }else{
+                    cout <<"Victoire du joueur " << playerG << "!!!" << endl;
+                }
+                cout <<"Au revoir!" << endl;
+                return 0;
             /*case '3':
                 autrefonction();
                 continue; */

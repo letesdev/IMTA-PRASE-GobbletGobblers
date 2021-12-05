@@ -3,7 +3,6 @@
 using namespace std;
 
 #include "logic.h"
-#include "board.h"
 #include "../interface/interfaceConsole.h"
 
 Logic::Logic(){
@@ -20,23 +19,19 @@ int Logic::check_input(int min, int max, string question){
     return input;
 }
 
-void Logic::choix(Board &board, player current_player){
-    int choixTour = 0, line = 0, column = 0, line_final = 0, column_final = 0, type = 1;
+void Logic::make_move(Board &board, player current_player){
+    int choix = 0, line = 0, column = 0, line_final = 0, column_final = 0, type = 1;
     int valide = 1;
     
     while (valide != 0){
         valide = 1;
-        choixTour = this->check_input(1, 2, "\nVoulez-vous ajouter ou déplacer une pièce? (1/2) >");
-        if (choixTour == 1){ /* Ajouter une pièce */
+        choix = this->check_input(1, 2, "\nVoulez-vous ajouter ou déplacer une pièce? (1/2) >");
+        if (choix == 1){ /* Ajouter une pièce */
             line = this->check_input(1, 3, "Introduisez la ligne (1,2,3) :");
             column = this->check_input(1, 3, "Introduisez la colonne (1,2,3) :");
             type = this->check_input(1, 3, "Introduisez la taille (1,2,3) :");
-
-            //check_turn(choixTour, type, line, column, line_final, column_final, &valide, current_player, game);
-            // Il me semble qu'il y a pas besoin de vérifier le tour. 
             
             valide = board.place_piece((size) type, line - 1, column - 1);
-            valide = 0;
             switch (valide){
                 case 0:
                     //printf("\nSuccess!");
@@ -53,14 +48,12 @@ void Logic::choix(Board &board, player current_player){
                 default:
                     break;
             }
-        } else if (choixTour == 2){ /* Déplacer une pièce */
+        } else if (choix == 2){ /* Déplacer une pièce */
             line = check_input(1, 3, "Introduisez la ligne: ");
             column = check_input(1, 3, "Introduisez la colonne: ");
             line_final = check_input(1, 3, "Introduisez la ligne finale: ");
             column_final = check_input(1, 3, "Introduisez la colonne finale: ");
 
-            //check_turn(choixTour, type, line, column, line_final, column_final, &valide, current_player, game);
-            // Il me semble qu'il y a pas besoin de checker le tour. 
             valide = board.move_piece(line - 1, column - 1, line_final - 1, column_final - 1);
             switch (valide){
                 case 0:
@@ -84,6 +77,66 @@ void Logic::choix(Board &board, player current_player){
     }
 }
 
+void Logic::simulate_move(Board &board, player current_player, bot current_bot){
+    vector<int> legal_lines; 
+    vector<int> legal_columns;
+    vector<int> legal_sizes;
+    int valide = 1;
+
+    vector<int> legal_move_source_lines; 
+    vector<int> legal_move_source_column;
+    vector<int> legal_move_source_size;
+
+    vector<int> legal_move_target_lines; 
+    vector<int> legal_move_target_column;
+    vector<int> legal_move_target_size;
+
+    
+    switch ((bot) current_bot - 1){
+        case RANDOM:{
+            while (valide != 0){
+                //int random_move = this->check_input(1, 2, "\nVoulez-vous ajouter ou déplacer une pièce? (1/2) >");
+                int random_move = rand() % 2 + 1;
+                
+                if (random_move == 1){ // place piece
+                    board.get_legal_place(legal_lines, legal_columns, legal_sizes);
+                    while (valide != 0){
+                        int random_choice = rand() % legal_lines.size() + 1;
+                        valide = board.place_piece((size) legal_sizes[random_choice], legal_lines[random_choice], legal_columns[random_choice]);
+                    }
+                }else{ // move piece
+                    board.get_legal_moves(legal_move_source_lines, legal_move_source_column, legal_move_source_size, legal_move_target_lines, legal_move_target_column, legal_move_target_size);
+                    if (!legal_move_source_lines.empty()){
+                        /*for(std::size_t i = 0; i < legal_move_source_lines.size(); ++i) {
+                            cout << "source (" << legal_move_source_lines[i] << ", " << legal_move_source_column[i] << ") -> (" << legal_move_target_lines[i] << ", " << legal_move_target_column[i] << ")" << endl;
+                        }*/
+                        while (valide != 0){
+                            int random_choice = rand() % legal_move_source_lines.size() + 1;
+                            valide = board.move_piece(legal_move_source_lines[random_choice], legal_move_source_column[random_choice], legal_move_target_lines[random_choice], legal_move_target_column[random_choice]);
+                        }
+                    }
+                }    
+            }
+            break;}
+        /*
+        case ONELAYER:
+        
+            break;
+
+        case TWOLAYER:
+        
+            break;
+
+        case INVINCIBOT:
+        
+            break;*/
+        
+        default:
+            break;
+    }
+
+}
+
 /* Mode de jeu: deux joueurs (pas de machine)*/
 /*  current_player 1 == Vous
     current_player 2 == Ami */
@@ -105,7 +158,7 @@ int Logic::play1vs1(){
         
         t0.printHouses(tableau);
         t0.printGameBoard(tableau);
-        choix(tableau, current_player);
+        make_move(tableau, current_player);
         
         current_player = tableau.next_player();
 
@@ -114,6 +167,60 @@ int Logic::play1vs1(){
             system("clear");
             t0.printGameBoard(tableau);
         }
+    }
+    return (int) tableau.get_winner();
+}
+
+bot Logic::askBotType(){
+    int valor; 
+
+    valor = check_input(1, 1, "Choisisez un type de bot, puis appuyez ENTER:\n \
+         1. Random. \n \
+        Option choisie: ");
+    /*2. One Layer. \n \
+         3. Two Layer. \n \
+         4. Invincible. \n \*/
+    return (bot) valor;
+}
+
+/* Mode de jeu: deux joueurs (pas de machine)*/
+/*  current_player 1 == Vous
+    current_player 2 == Bot */
+int Logic::play1vsbot(){
+    Board tableau;
+    Terminal t0;
+    bot current_bot;
+    int run = 1;
+    
+    player current_player = tableau.next_player();
+    //current_bot = askBotType();
+    current_bot = RANDOM;
+    while (run == 1){
+        system("clear");
+        cout << "Mode de jeu: Joueur contre Bot" << endl;
+        cout << "Tour du ";
+        if (current_player == PLAYER_1){
+            cout << ANSI_COLOR_YELLOW "joueur #1!" ANSI_COLOR_RESET << endl;
+        }else if (current_player == PLAYER_2){
+            cout << ANSI_COLOR_BLUE "bot!" ANSI_COLOR_RESET << endl;
+        }
+        
+        t0.printHouses(tableau);
+        t0.printGameBoard(tableau);
+        if (current_player == PLAYER_1){
+            make_move(tableau, current_player);
+        }else if (current_player == PLAYER_2){
+            simulate_move(tableau, current_player, current_bot);
+        }
+
+        if (tableau.get_winner()!=0){
+            run = 0;
+            system("clear");
+            t0.printGameBoard(tableau);
+        }else{
+            current_player = tableau.next_player();
+        }
+        
     }
     return (int) tableau.get_winner();
 }
