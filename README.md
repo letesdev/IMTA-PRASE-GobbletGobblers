@@ -15,9 +15,10 @@ This repository is an educational purpose software. This software was an Enginee
 _Gobblet Gobblers_ is a variant of the classic Tic-Tac-Toe from [Blue Orange](https://blueorangegames.eu/en/games/gobblet-gobblers). The main difference with Tic-Tac-Toe is you can move your pieces and you can gobble up your opponent's pieces if it is smaller than yours! 
 
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/F8F29jfZBRo?si=PcupK_i22t4-cDJf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
 
+[![GOBBLET GOBBLERS](https://img.youtube.com/vi/F8F29jfZBRo/0.jpg)](https://www.youtube.com/watch?v=F8F29jfZBRo)
+
+</div>
 
 ## Project description
 
