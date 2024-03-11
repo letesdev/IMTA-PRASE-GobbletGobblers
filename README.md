@@ -5,7 +5,6 @@
 
 ![C Badge](https://img.shields.io/badge/C-A8B9CC?logo=C&logoColor=fff&style=flat)
 ![C++ Badge](https://img.shields.io/badge/C++-00599C?style=flat&logo=C%2B%2B&logoColor=white)
-![JSON Badge](https://img.shields.io/badge/json-f5ab59?style=flat&logo=json&logoColor=white&color=4bc61d)
 </div>
 
 ### About
@@ -51,9 +50,11 @@ Linux comes with the GNU `C` compiler preinstalled (if not, you can easily insta
     cd srcC && make
     ```
 3. Run the software using `./GobbletGobblers_v1`
-    ![GobbletGobblers_v1](assets\GobbletGobblers_v1.png)
-4. Play !
-    ![GobbletGobblers_v1_play](assets\GobbletGobblers_v1_play_explained.png)
+
+    ![GobbletGobblers_v1](assets/GobbletGobblers_v1.png)
+5. Play !
+
+    ![GobbletGobblers_v1_play](assets/GobbletGobblers_v1_play_explained.png)
 
 ### b. In order to test the Game Engine, written in `C++`
 
@@ -62,7 +63,8 @@ Linux comes with the GNU `C` compiler preinstalled (if not, you can easily insta
     cd srcC++ && make
     ```
 3. Run the software using `./GobbletGobblers_v2`
-    ![GobbletGobblers_v2](assets\GobbletGobblers_v2.png)
+
+    ![GobbletGobblers_v2](assets/GobbletGobblers_v2.png)
 4. Play !
 
 ### c. In order to play against the Bot, written in `C++`
@@ -71,7 +73,8 @@ Linux comes with the GNU `C` compiler preinstalled (if not, you can easily insta
     cd srcC++ && make
     ```
 3. Run the software using `./GobbletGobblers_v2`
-    ![GobbletGobblers_v2](assets\GobbletGobblers_v3.png)
+
+    ![GobbletGobblers_v2](assets/GobbletGobblers_v3.png)
 4. Select **2. Jouer vs Bot.**, then select bot type: 
     - _Random_ bot will choose randomly a movement between the legal movements available, 
     - _One Layer_ bot will choose the winning movement, taking account the first of the three layer at the game. 
